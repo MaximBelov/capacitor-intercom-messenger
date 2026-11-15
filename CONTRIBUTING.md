@@ -63,6 +63,11 @@ plugin's `@PluginMethod`, and a row of the platform table in the README. The par
 `example-app/` installs the plugin from this repository and has a button per method. `npm run example:android:build` and
 `npm run example:ios:build` build it the way CI does.
 
+`.github/workflows/pins.yaml` keeps the native SDK pins current every Monday: when a newer Intercom iOS or Android SDK is out, it
+opens a pull request that moves the pin (`Package.swift` and the podspec, or `android/build.gradle`) and the README lines that
+name it, and starts CI on its branch. It needs Settings > Actions > General > "Allow GitHub Actions to create and approve pull
+requests". `node scripts/check-pins.mjs` says where each pin stands.
+
 ## Publishing
 
 A version is published by CI, not by hand: `.github/workflows/ci.yaml` publishes the version in `package.json` to npm when a push
