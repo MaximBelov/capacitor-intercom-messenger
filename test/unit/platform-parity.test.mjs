@@ -94,3 +94,21 @@ test('the Intercom SDK versions agree between the Swift package, the podspec, Gr
   assert.ok(readme.includes(spm), `README.md does not name the iOS SDK version ${spm}`);
   assert.ok(readme.includes(gradle), `README.md does not name the Android SDK version ${gradle}`);
 });
+
+test('every ProGuard file the Android library hands to its consumers is in the npm package', () => {
+  // Gradle fails an app's build when a consumerProguardFiles entry is missing from node_modules, and
+  // package.json's "files" decides what reaches node_modules.
+  const gradle = read('android/build.gradle');
+  const files = JSON.parse(read('package.json')).files;
+  const consumer = [...gradle.matchAll(/consumerProguardFiles\s+((?:'[^']+'\s*,?\s*)+)/g)].flatMap((match) =>
+    [...match[1].matchAll(/'([^']+)'/g)].map((name) => `android/${name[1]}`),
+  );
+  assert.ok(consumer.length > 0, 'the library declares a consumer ProGuard file');
+  for (const path of consumer) {
+    assert.ok(
+      files.some((entry) => path === entry || path.startsWith(entry.endsWith('/') ? entry : `${entry}/`)),
+      `${path} is not in package.json "files"`,
+    );
+    assert.ok(read(path).length > 0, `${path} exists`);
+  }
+});

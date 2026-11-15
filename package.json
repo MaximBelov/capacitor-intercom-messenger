@@ -1,6 +1,6 @@
 {
   "name": "capacitor-intercom-messenger",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Intercom Messenger for Capacitor on iOS, Android and the web, with one API and the unread conversation count as a value and an event",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -9,6 +9,7 @@
   "files": [
     "android/src/main/",
     "android/build.gradle",
+    "android/proguard-rules.pro",
     "dist/",
     "ios/Sources",
     "ios/Tests",
