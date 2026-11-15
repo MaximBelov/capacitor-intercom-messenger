@@ -4,8 +4,9 @@ The [Intercom](https://www.intercom.com) Messenger in a Capacitor app, on iOS, A
 
 - **One API on all three platforms.** The same calls log a user in, open the Messenger and count unread conversations on a phone
   and in a browser. Where a platform cannot do something, the table below says what the call does there instead.
-- **Current Intercom SDKs.** iOS SDK 19.11.0 (from the `intercom-ios-sp` Swift package, or the `Intercom` pod), Android SDK
-  18.13.0, and the official [`@intercom/messenger-js-sdk`](https://www.npmjs.com/package/@intercom/messenger-js-sdk) on the web.
+- **Current Intercom SDKs.** iOS SDK 19.11.0 (from the `intercom-ios-sp` Swift package, or the `Intercom` pod),
+  Android SDK 18.13.0 (`io.intercom.android:intercom-sdk`), and the official
+  [`@intercom/messenger-js-sdk`](https://www.npmjs.com/package/@intercom/messenger-js-sdk) on the web.
 - **The unread conversation count as a value and an event.** `getUnreadConversationCount()` reads it, and
   `unreadConversationCountChange` reports every change, from each SDK's own notification. Nothing polls.
 
