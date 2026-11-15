@@ -1,0 +1,8 @@
+{
+  "appId": "com.example.intercommessenger",
+  "appName": "Intercom Messenger example",
+  "webDir": "dist",
+  "plugins": {
+    "IntercomMessenger": {}
+  }
+}

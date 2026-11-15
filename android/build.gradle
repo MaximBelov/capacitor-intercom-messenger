@@ -1,0 +1,69 @@
+ext {
+    junitVersion = project.hasProperty('junitVersion') ? rootProject.ext.junitVersion : '4.13.2'
+    // The Intercom Android SDK. An app can pin another 18.x by setting intercomSdkVersion in its variables.gradle.
+    intercomSdkVersion = project.hasProperty('intercomSdkVersion') ? rootProject.ext.intercomSdkVersion : '18.13.0'
+}
+
+buildscript {
+    ext.kotlin_version = project.hasProperty("kotlin_version") ? rootProject.ext.kotlin_version : '2.4.21'
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // The Android Gradle plugin Capacitor 8's own library builds with: Gradle refuses two versions of it in one build.
+        classpath 'com.android.tools.build:gradle:8.13.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    namespace = "io.github.maximbelov.intercommessenger"
+    compileSdk = project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 36
+    defaultConfig {
+        minSdkVersion project.hasProperty('minSdkVersion') ? rootProject.ext.minSdkVersion : 24
+        targetSdkVersion project.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : 36
+        versionCode 1
+        versionName "1.0"
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError = false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+    testOptions {
+        // The SDK's logger reaches android.util.Log when an attribute is refused; on the JVM that is a stub.
+        unitTests.returnDefaultValues = true
+    }
+}
+
+kotlin {
+    jvmToolchain(21)
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':capacitor-android')
+    implementation "io.intercom.android:intercom-sdk:$intercomSdkVersion"
+    testImplementation "junit:junit:$junitVersion"
+    // JSObject is an org.json.JSONObject, which android.jar only stubs on the JVM; the real one lets the tests build options.
+    testImplementation "org.json:json:20260814"
+}

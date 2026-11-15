@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Intercom Messenger example</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: env(safe-area-inset-top) 16px 120px;
+      }
+      fieldset {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin: 12px 0;
+      }
+      label {
+        display: block;
+        margin: 6px 0;
+      }
+      input,
+      select {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 6px;
+        font-size: 16px;
+      }
+      button {
+        margin: 4px 4px 4px 0;
+        padding: 8px 10px;
+        font-size: 15px;
+      }
+      #log {
+        white-space: pre-wrap;
+        font-family: ui-monospace, monospace;
+        font-size: 12px;
+        background: #f4f4f4;
+        padding: 8px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Intercom Messenger</h1>
+      <p>Platform: <strong id="platform"></strong> · Unread: <strong id="unread">0</strong></p>
+
+      <fieldset>
+        <legend>Set up</legend>
+        <label>Workspace (app) id <input id="appId" autocomplete="off" autocapitalize="off" /></label>
+        <label>API key for this platform (iOS or Android; not used on the web)
+          <input id="apiKey" autocomplete="off" autocapitalize="off" />
+        </label>
+        <label>Region (web only)
+          <select id="region">
+            <option value="us">us</option>
+            <option value="eu">eu</option>
+            <option value="ap">ap</option>
+          </select>
+        </label>
+        <button data-call="loadWithKeys">loadWithKeys</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>User</legend>
+        <label>User id <input id="userId" autocomplete="off" autocapitalize="off" /></label>
+        <label>Email <input id="email" type="email" autocomplete="off" autocapitalize="off" /></label>
+        <label>User hash (HMAC) <input id="hmac" autocomplete="off" autocapitalize="off" /></label>
+        <label>JWT <input id="jwt" autocomplete="off" autocapitalize="off" /></label>
+        <label>Name <input id="name" autocomplete="off" /></label>
+        <button data-call="setUserHash">setUserHash</button>
+        <button data-call="setUserJwt">setUserJwt</button>
+        <button data-call="loginUser">loginUser</button>
+        <button data-call="loginUnidentifiedUser">loginUnidentifiedUser</button>
+        <button data-call="updateUser">updateUser</button>
+        <button data-call="logout">logout</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Messenger</legend>
+        <label>Space
+          <select id="space">
+            <option value="">(home)</option>
+            <option value="messages">messages</option>
+            <option value="helpCenter">helpCenter</option>
+            <option value="tickets">tickets</option>
+          </select>
+        </label>
+        <label>Composer message <input id="message" autocomplete="off" /></label>
+        <label>Content type
+          <select id="contentType">
+            <option value="article">article</option>
+            <option value="carousel">carousel</option>
+            <option value="survey">survey</option>
+            <option value="conversation">conversation</option>
+            <option value="ticket">ticket</option>
+            <option value="helpCenterCollections">helpCenterCollections</option>
+          </select>
+        </label>
+        <label>Content id (or comma-separated collection ids) <input id="contentId" autocomplete="off" /></label>
+        <label>Bottom padding <input id="padding" type="number" min="0" value="80" /></label>
+        <button data-call="present">present</button>
+        <button data-call="presentMessageComposer">presentMessageComposer</button>
+        <button data-call="presentArticle">presentArticle</button>
+        <button data-call="presentHelpCenter">presentHelpCenter</button>
+        <button data-call="presentContent">presentContent</button>
+        <button data-call="hide">hide</button>
+        <button data-call="setLauncherVisible" data-visible="true">setLauncherVisible(true)</button>
+        <button data-call="setLauncherVisible" data-visible="false">setLauncherVisible(false)</button>
+        <button data-call="setInAppMessagesVisible" data-visible="true">setInAppMessagesVisible(true)</button>
+        <button data-call="setInAppMessagesVisible" data-visible="false">setInAppMessagesVisible(false)</button>
+        <button data-call="setBottomPadding">setBottomPadding</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Events, count and push</legend>
+        <label>Event name <input id="eventName" value="example-button" autocomplete="off" /></label>
+        <label>FCM token (Android) <input id="pushToken" autocomplete="off" autocapitalize="off" /></label>
+        <label>Push data (JSON) <input id="pushData" value='{"receiver":"intercom_sdk"}' autocomplete="off" /></label>
+        <button data-call="logEvent">logEvent</button>
+        <button data-call="getUnreadConversationCount">getUnreadConversationCount</button>
+        <button data-call="sendPushTokenToIntercom">sendPushTokenToIntercom</button>
+        <button data-call="isIntercomPush">isIntercomPush</button>
+        <button data-call="handlePush">handlePush</button>
+      </fieldset>
+
+      <h2>Log</h2>
+      <div id="log" role="log" aria-live="polite"></div>
+    </main>
+
+    <script src="./js/example.js" type="module"></script>
+  </body>
+</html>

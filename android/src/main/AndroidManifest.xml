@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Sets Intercom up from capacitor.config.json when the process starts, before any activity (see IntercomMessengerInitializer). -->
+        <provider
+            android:name="io.github.maximbelov.intercommessenger.IntercomMessengerInitializer"
+            android:authorities="${applicationId}.intercommessenger-init"
+            android:exported="false" />
+    </application>
+</manifest>
