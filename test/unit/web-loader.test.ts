@@ -6,7 +6,11 @@ describe('the web implementation', () => {
     const method = vi.spyOn(web.IntercomMessengerWeb.prototype, 'getUnreadConversationCount');
     const { IntercomMessenger } = await import('../../src');
 
-    await Promise.all([IntercomMessenger.getUnreadConversationCount({}), IntercomMessenger.getUnreadConversationCount({}), IntercomMessenger.getUnreadConversationCount({})]);
+    await Promise.all([
+      IntercomMessenger.getUnreadConversationCount({}),
+      IntercomMessenger.getUnreadConversationCount({}),
+      IntercomMessenger.getUnreadConversationCount({}),
+    ]);
 
     expect(method).toHaveBeenCalledTimes(3);
     expect(new Set(method.mock.contexts).size).toBe(1);
