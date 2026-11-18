@@ -25,7 +25,7 @@ const android = [...read(KOTLIN).matchAll(/@PluginMethod\s+fun (\w+)\(/g)].map((
 const events = [...read('src/definitions.ts').matchAll(/eventName: '(\w+)'/g)].map((m) => m[1]).sort();
 
 test('the API declares its methods and events', () => {
-  assert.equal(api.length, 21, `found ${api.join(', ')}`);
+  assert.equal(api.length, 22, `found ${api.join(', ')}`);
   assert.deepEqual(events, ['unreadConversationCountChange', 'windowDidHide', 'windowDidShow']);
 });
 
