@@ -230,6 +230,20 @@ export interface IntercomMessengerPlugin {
   getUnreadConversationCount(): Promise<UnreadConversationCount>;
 
   /**
+   * Whether a user is logged in, identified or unidentified: after
+   * `loginUser()` or `loginUnidentifiedUser()` and until `logout()`.
+   *
+   * The native SDKs keep the user between launches, so on iOS and Android
+   * this is `true` at start for a user who logged in during an earlier one.
+   * Check it before `loginUser()` to avoid logging in a user who already is.
+   * It is `false` before Intercom is set up. On the web it is whether the
+   * Messenger has been booted since the page loaded.
+   *
+   * @since 0.2.0
+   */
+  isUserLoggedIn(): Promise<IsUserLoggedInResult>;
+
+  /**
    * Android: sends the Firebase Cloud Messaging token to Intercom, so it can
    * deliver its pushes to this device. Call it after login and again whenever
    * the token changes.
@@ -600,6 +614,13 @@ export interface PushDataOptions {
    * @since 0.1.0
    */
   data: PushData;
+}
+
+export interface IsUserLoggedInResult {
+  /**
+   * @since 0.2.0
+   */
+  value: boolean;
 }
 
 export interface IsIntercomPushResult {

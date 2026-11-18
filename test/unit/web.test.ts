@@ -348,3 +348,36 @@ describe('push on the web', () => {
     expect((await errorOf(plugin.handlePush({ data: {} }))).code).toBe(ExceptionCode.Unimplemented);
   });
 });
+
+describe('isUserLoggedIn', () => {
+  beforeEach(async () => {
+    await plugin.loadWithKeys({ appId: 'abc123' });
+  });
+
+  it('is false until a login has booted the Messenger', async () => {
+    await expect(plugin.isUserLoggedIn()).resolves.toEqual({ value: false });
+  });
+
+  it('is true after logging in a known user or an anonymous visitor', async () => {
+    await plugin.loginUser({ userId: 'u1' });
+    await expect(plugin.isUserLoggedIn()).resolves.toEqual({ value: true });
+    await plugin.logout();
+    await plugin.loginUnidentifiedUser();
+    await expect(plugin.isUserLoggedIn()).resolves.toEqual({ value: true });
+  });
+
+  it('is false again after logout', async () => {
+    await plugin.loginUser({ userId: 'u1' });
+    await plugin.logout();
+    await expect(plugin.isUserLoggedIn()).resolves.toEqual({ value: false });
+  });
+
+  it('stays false when the login fails', async () => {
+    const failing = new IntercomMessengerWeb(async () => {
+      throw new Error(`Cannot find package '${PEER_DEPENDENCY}'`);
+    });
+    await failing.loadWithKeys({ appId: 'abc123' });
+    await failing.loginUser({ userId: 'u1' }).catch(() => undefined);
+    await expect(failing.isUserLoggedIn()).resolves.toEqual({ value: false });
+  });
+});

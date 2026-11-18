@@ -188,6 +188,12 @@ class IntercomMessengerPlugin : Plugin() {
     }
 
     @PluginMethod
+    fun isUserLoggedIn(call: PluginCall) {
+        // false until Intercom is set up, as on the other platforms.
+        call.resolve(JSObject().put("value", setup.isSetUp && Intercom.client().isUserLoggedIn()))
+    }
+
+    @PluginMethod
     fun sendPushTokenToIntercom(call: PluginCall) = handle(call) { options ->
         IntercomMessengerPush.sendTokenToIntercom(application, Arguments.requiredString(options, "value"))
         call.resolve()

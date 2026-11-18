@@ -169,6 +169,7 @@ Every method exists on every platform. This is what each one does where the plat
 | `setBottomPadding`           | `Intercom.setBottomPadding`, in points                  | `setBottomPadding`, converted from dp to pixels   | `vertical_padding` (Intercom's minimum is 20)                 |
 | `logEvent`                   | `Intercom.logEvent(withName:metaData:)`                 | `logEvent`                                        | `trackEvent`                                                  |
 | `getUnreadConversationCount` | `Intercom.unreadConversationCount()`                    | `getUnreadConversationCount`                      | the count `onUnreadCountChange` last reported                 |
+| `isUserLoggedIn`             | `Intercom.isUserLoggedIn()`                             | `isUserLoggedIn`                                  | whether a login has booted the Messenger                      |
 | `sendPushTokenToIntercom`    | resolves, does nothing: iOS takes the APNs token itself | `IntercomPushClient.sendTokenToIntercom`          | resolves, does nothing: no push on the web                    |
 | `isIntercomPush`             | `Intercom.isIntercomPushNotification`                   | `IntercomPushClient.isIntercomPush`               | rejects `UNIMPLEMENTED`                                       |
 | `handlePush`                 | `Intercom.handlePushNotification`                       | `IntercomPushClient.handlePush`                   | rejects `UNIMPLEMENTED`                                       |
@@ -287,6 +288,7 @@ runs everywhere, and `isIntercomPush()` and `handlePush()` reject with `UNIMPLEM
 * [`setBottomPadding(...)`](#setbottompadding)
 * [`logEvent(...)`](#logevent)
 * [`getUnreadConversationCount()`](#getunreadconversationcount)
+* [`isUserLoggedIn()`](#isuserloggedin)
 * [`sendPushTokenToIntercom(...)`](#sendpushtokentointercom)
 * [`isIntercomPush(...)`](#isintercompush)
 * [`handlePush(...)`](#handlepush)
@@ -647,6 +649,28 @@ at start and after each login, since the event only reports changes.
 --------------------
 
 
+### isUserLoggedIn()
+
+```typescript
+isUserLoggedIn() => Promise<IsUserLoggedInResult>
+```
+
+Whether a user is logged in, identified or unidentified: after
+`loginUser()` or `loginUnidentifiedUser()` and until `logout()`.
+
+The native SDKs keep the user between launches, so on iOS and Android
+this is `true` at start for a user who logged in during an earlier one.
+Check it before `loginUser()` to avoid logging in a user who already is.
+It is `false` before Intercom is set up. On the web it is whether the
+Messenger has been booted since the page loaded.
+
+**Returns:** <code>Promise&lt;<a href="#isuserloggedinresult">IsUserLoggedInResult</a>&gt;</code>
+
+**Since:** 0.2.0
+
+--------------------
+
+
 ### sendPushTokenToIntercom(...)
 
 ```typescript
@@ -918,6 +942,13 @@ Event metadata by name, passed to Intercom as it is.
 | Prop        | Type                | Since |
 | ----------- | ------------------- | ----- |
 | **`count`** | <code>number</code> | 0.1.0 |
+
+
+#### IsUserLoggedInResult
+
+| Prop        | Type                 | Since |
+| ----------- | -------------------- | ----- |
+| **`value`** | <code>boolean</code> | 0.2.0 |
 
 
 #### PushTokenOptions

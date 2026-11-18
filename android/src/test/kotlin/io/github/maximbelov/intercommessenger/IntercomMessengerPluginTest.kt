@@ -20,7 +20,7 @@ class IntercomMessengerPluginTest {
     @Test
     fun everyPluginMethodTakesACallAndReturnsNothing() {
         val methods = IntercomMessengerPlugin::class.java.declaredMethods.filter { it.isAnnotationPresent(PluginMethod::class.java) }
-        assertEquals(21, methods.size)
+        assertEquals(22, methods.size)
         for (method in methods) {
             assertEquals(method.name, listOf(PluginCall::class.java), method.parameterTypes.toList())
             assertEquals(method.name, Void.TYPE, method.returnType)

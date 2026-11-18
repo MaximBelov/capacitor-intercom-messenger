@@ -25,6 +25,7 @@ public class IntercomMessengerPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "setBottomPadding", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "logEvent", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "getUnreadConversationCount", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isUserLoggedIn", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "sendPushTokenToIntercom", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "isIntercomPush", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "handlePush", returnType: CAPPluginReturnPromise)
@@ -248,6 +249,11 @@ public class IntercomMessengerPlugin: CAPPlugin, CAPBridgedPlugin {
         // 0 until Intercom is set up, as on the other platforms.
         let count = setup.isSetUp ? Int(Intercom.unreadConversationCount()) : 0
         call.resolve(["count": count])
+    }
+
+    @objc func isUserLoggedIn(_ call: CAPPluginCall) {
+        // false until Intercom is set up, as on the other platforms.
+        call.resolve(["value": setup.isSetUp && Intercom.isUserLoggedIn()])
     }
 
     @objc func sendPushTokenToIntercom(_ call: CAPPluginCall) {

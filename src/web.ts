@@ -8,6 +8,7 @@ import type {
   IntercomRegion,
   IntercomSpace,
   IsIntercomPushResult,
+  IsUserLoggedInResult,
   LoadWithKeysOptions,
   LogEventOptions,
   LoginUserOptions,
@@ -262,6 +263,10 @@ export class IntercomMessengerWeb extends WebPlugin implements IntercomMessenger
 
   async getUnreadConversationCount(): Promise<UnreadConversationCount> {
     return { count: this.unreadCount };
+  }
+
+  async isUserLoggedIn(): Promise<IsUserLoggedInResult> {
+    return { value: this.booted };
   }
 
   // The Messenger on the web has no push, so there is no token to hand over: resolving lets the same code run on every platform.
