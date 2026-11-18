@@ -11,7 +11,7 @@ final class IntercomMessengerPluginTests: XCTestCase {
 
     func testEveryMethodIsAPromiseMethod() {
         let methods = IntercomMessengerPlugin().pluginMethods
-        XCTAssertEqual(methods.count, 21)
+        XCTAssertEqual(methods.count, 22)
         XCTAssertTrue(methods.allSatisfy { $0.returnType == CAPPluginReturnPromise })
     }
 
