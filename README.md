@@ -5,7 +5,7 @@ The [Intercom](https://www.intercom.com) Messenger in a Capacitor app, on iOS, A
 - **One API on all three platforms.** The same calls log a user in, open the Messenger and count unread conversations on a phone
   and in a browser. Where a platform cannot do something, the table below says what the call does there instead.
 - **Current Intercom SDKs.** iOS SDK 19.11.0 (from the `intercom-ios-sp` Swift package, or the `Intercom` pod),
-  Android SDK 18.13.0 (`io.intercom.android:intercom-sdk`), and the official
+  Android SDK 18.14.0 (`io.intercom.android:intercom-sdk`), and the official
   [`@intercom/messenger-js-sdk`](https://www.npmjs.com/package/@intercom/messenger-js-sdk) on the web.
 - **The unread conversation count as a value and an event.** `getUnreadConversationCount()` reads it, and
   `unreadConversationCountChange` reports every change, from each SDK's own notification. Nothing polls.
@@ -263,7 +263,7 @@ runs everywhere, and `isIntercomPush()` and `handlePush()` reject with `UNIMPLEM
 | Platform | SDK                                                        | Version                | Change it                                                        |
 | -------- | ---------------------------------------------------------- | ---------------------- | ---------------------------------------------------------------- |
 | iOS      | `intercom-ios-sp` (Swift package) / `Intercom` (CocoaPods) | from 19.11.0, below 20 | the app's package resolution picks the newest 19.x               |
-| Android  | `io.intercom.android:intercom-sdk`                         | 18.13.0                | set `intercomSdkVersion` in the app's `android/variables.gradle` |
+| Android  | `io.intercom.android:intercom-sdk`                         | 18.14.0                | set `intercomSdkVersion` in the app's `android/variables.gradle` |
 | Web      | `@intercom/messenger-js-sdk`                               | 0.0.20 or newer        | the version the app installs                                     |
 
 ## API
