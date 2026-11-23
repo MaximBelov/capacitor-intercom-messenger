@@ -1,7 +1,7 @@
 ext {
     junitVersion = project.hasProperty('junitVersion') ? rootProject.ext.junitVersion : '4.13.2'
     // The Intercom Android SDK. An app can pin another 18.x by setting intercomSdkVersion in its variables.gradle.
-    intercomSdkVersion = project.hasProperty('intercomSdkVersion') ? rootProject.ext.intercomSdkVersion : '18.13.0'
+    intercomSdkVersion = project.hasProperty('intercomSdkVersion') ? rootProject.ext.intercomSdkVersion : '18.14.0'
 }
 
 buildscript {
